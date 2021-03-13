@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.l0k1.coordinatePlotter.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "client": [
+    "locationMixin",
+    "ClientCommandMixin"
+
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
