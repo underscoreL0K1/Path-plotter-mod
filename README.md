@@ -1,9 +1,3 @@
-# Fabric Example Mod
-
-## Setup
-
-For setup instructions please see the [fabric wiki page](https://fabricmc.net/wiki/tutorial:setup) that relates to the IDE that you are using.
-
-## License
-
-This template is available under the CC0 license. Feel free to learn from it and incorporate it in your own projects.
+Use Command #TrackerToggle to toggle the tracker on and off
+Create a folder called 'LocationLogger' in .minecraft before you run this mod, or else you will crash.
+The time til death is set to 6000 ticks by default 
