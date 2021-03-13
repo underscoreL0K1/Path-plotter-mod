@@ -17,7 +17,7 @@ public abstract class ClientCommandMixin {
 
     @Inject(method = "sendChatMessage", at = @At("HEAD"), cancellable = true)
     private void onSendChatMessage(String message, CallbackInfo ci) throws IOException {
-        if (message.equals("@TrackerToggle")) {
+        if (message.equals("#TrackerToggle")) {
             System.out.println("startGoing");
             onOff();
             ci.cancel();
