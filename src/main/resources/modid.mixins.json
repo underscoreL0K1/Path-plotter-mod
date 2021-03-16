@@ -7,7 +7,9 @@
   ],
   "client": [
     "locationMixin",
-    "ClientCommandMixin"
+    "ClientCommandMixin",
+    "ConnectMixin",
+    "DeathMixin"
 
   ],
   "injectors": {
