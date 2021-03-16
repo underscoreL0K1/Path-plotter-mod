@@ -2,7 +2,9 @@ package me.l0k1.coordinatePlotter.client;
 
 import net.minecraft.client.MinecraftClient;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.security.PublicKey;
 
 public class Activator {
 
@@ -10,6 +12,24 @@ public class Activator {
     public static Boolean onOff = false;
     public static int path = 1;
     public static Boolean disconnected = false;
+    public static String FileName = MeClient.filesName();
+    static FileWriter addPoints;
+
+    static {
+        try {
+            addPoints = new FileWriter("LocationLogger\\"+FileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Activator() throws IOException {
+    }
+
+    public static void fileWriter(String x) throws IOException {
+        addPoints.append(x);
+        addPoints.flush();
+    }
 
     public static void  onOff() throws IOException {
         onOff = !onOff;
