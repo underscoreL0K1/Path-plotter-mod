@@ -12,7 +12,9 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static me.l0k1.coordinatePlotter.client.TilDeath.DeathTimer;
+import static me.l0k1.coordinatePlotter.client.Activator.disconnecter;
+import static me.l0k1.coordinatePlotter.client.Activator.pathChoice;
+
 
 @Mixin(PlayerEntity.class)
 public class locationMixin {
@@ -27,16 +29,21 @@ public class locationMixin {
 	public File Coordinates = new File("LocationLogger\\"+FileName);
 	public FileWriter addPoints = new FileWriter("LocationLogger\\"+FileName);
 	boolean run = false;
+	boolean disVal = false;
 	int DeathTick = 0;
 
 
 	public locationMixin() throws IOException {
 	}
-
 	@Inject(at = @At("HEAD"), method = "tick()V")
 	public void onTickEvent(CallbackInfo info) throws IOException {
 		run = Activator.onOff;
+		disVal = Activator.disconnected;
 		++ticks;
+		if (disVal && ticks > 40) {
+			disconnecter();
+			mc.player.sendChatMessage("/kill");
+		}
 		if (ticks > 50 && run == true) {
 			double posX = mc.player.getX();
 			double posY = mc.player.getY();
@@ -45,37 +52,7 @@ public class locationMixin {
 			String realPosY = LASFormat.format(posY);
 			String realPosZ = LASFormat.format(posZ);
 			Coordinates.setWritable(true);
-
-			int xInts = realPosX.indexOf('.');
-			int XDecimals = realPosX.length() - xInts - 1;
-			if (!realPosX.contains(".")) {
-				realPosX = realPosX + ".000";
-			} else if (XDecimals == 1){
-				realPosX = realPosX + "00";
-			} else if (XDecimals == 2){
-				realPosX = realPosX + "0";
-			}
-
-			int yInts = realPosY.indexOf('.');
-			int yDecimals = realPosY.length() - yInts - 1;
-			if (!realPosY.contains(".")) {
-				realPosY = realPosY + ".000";
-			} else if (yDecimals == 1){
-				realPosY = realPosY + "00";
-			} else if (yDecimals == 2){
-				realPosY = realPosY + "0";
-			}
-
-			int zInts = realPosZ.indexOf('.');
-			int zDecimals = realPosZ.length() - zInts - 1;
-			if (!realPosZ.contains(".")) {
-				realPosZ = realPosZ + ".000";
-			} else if (zDecimals == 1){
-				realPosY = realPosY + "00";
-			} else if (zDecimals == 2){
-				realPosZ = realPosZ + "0";
-			}
-			Position = realPosX + " " + realPosZ + " " + realPosY + "\n";
+			Position = realPosZ + " " + realPosX + " " + realPosY + "\n";
 			//System.out.println(Position);
 			addPoints.append(Position);
 			addPoints.flush();
@@ -86,7 +63,7 @@ public class locationMixin {
 				mc.player.sendChatMessage("/kill");
 				DeathTick = 0;
 			}
-			System.out.println(String.valueOf(DeathTick));
+			//System.out.println(String.valueOf(DeathTick));
 		}
 	}
 
